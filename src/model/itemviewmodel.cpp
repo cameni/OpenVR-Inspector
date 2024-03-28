@@ -20,11 +20,13 @@ std::map<int, const char*> ItemViewModel::applicationPropertyNames = {
 	{ 51, "NewsURL" },
 	{ 52, "ImagePath" },
 	{ 53, "Source" },
+	{ 54, "ActionManifestURL" },
 	{ 60, "IsDashboardOverlay" },
 	{ 61, "IsTemplate" },
 	{ 62, "IsInstanced" },
 	{ 63, "IsInternal" },
 	{ 64, "WantsCompositorPauseInStandby" },
+	{ 65, "IsHidden" },
 	{ 70, "LastLaunchTime" },
 };
 
@@ -66,6 +68,26 @@ std::map<int, const char*> ItemViewModel::devicePropertyNames = {
 	{ 1033, "ViveSystemButtonFixRequired" },
 	{ 1034, "ParentDriver" },
 	{ 1035, "ResourceRoot" },
+	{ 1036, "RegisteredDeviceType" },
+	{ 1037, "InputProfilePath" },
+	{ 1038, "NeverTracked" },
+	{ 1039, "NumCameras" },
+	{ 1040, "CameraFrameLayout" },
+	{ 1041, "CameraStreamFormat" },
+	{ 1042, "AdditionalDeviceSettingsPath" },
+	{ 1043, "Identifiable" },
+	{ 1044, "BootloaderVersion" },
+	{ 1045, "AdditionalSystemReportData" },
+	{ 1046, "CompositeFirmwareVersion" },
+	{ 1047, "Firmware_RemindUpdate" },
+	{ 1048, "PeripheralApplicationVersion" },
+	{ 1049, "ManufacturerSerialNumber" },
+	{ 1050, "ComputedSerialNumber" },
+	{ 1051, "EstimatedDeviceFirstUseTime" },
+	{ 1052, "DevicePowerUsage" },
+	{ 1053, "IgnoreMotionForStandby" },
+	{ 1054, "ActualTrackingSystemName" },
+
 	{ 2000, "ReportsTimeSinceVSync" },
 	{ 2001, "SecondsFromVsyncToPhotons" },
 	{ 2002, "DisplayFrequency" },
@@ -113,6 +135,96 @@ std::map<int, const char*> ItemViewModel::devicePropertyNames = {
 	{ 2044, "DisplayDebugMode" },
 	{ 2045, "GraphicsAdapterLuid" },
 	{ 2048, "DriverProvidedChaperonePath" },
+	{ 2049, "ExpectedTrackingReferenceCount" },
+	{ 2050, "ExpectedControllerCount" },
+	{ 2051, "NamedIconPathControllerLeftDeviceOff" },
+	{ 2052, "NamedIconPathControllerRightDeviceOff" },
+	{ 2053, "NamedIconPathTrackingReferenceDeviceOff" },
+	{ 2054, "DoNotApplyPrediction" },
+	{ 2055, "CameraToHeadTransforms" },
+	{ 2056, "DistortionMeshResolution" },
+	{ 2057, "DriverIsDrawingControllers" },
+	{ 2058, "DriverRequestsApplicationPause" },
+	{ 2059, "DriverRequestsReducedRendering" },
+	{ 2060, "MinimumIpdStepMeters" },
+	{ 2061, "AudioBridgeFirmwareVersion" },
+	{ 2062, "ImageBridgeFirmwareVersion" },
+	{ 2063, "ImuToHeadTransform" },
+	{ 2064, "ImuFactoryGyroBias" },
+	{ 2065, "ImuFactoryGyroScale" },
+	{ 2066, "ImuFactoryAccelerometerBias" },
+	{ 2067, "ImuFactoryAccelerometerScale" },
+	// reserved 2068
+	{ 2069, "ConfigurationIncludesLighthouse20Features" },
+	{ 2070, "AdditionalRadioFeatures" },
+	{ 2071, "CameraWhiteBalance" },
+	{ 2072, "CameraDistortionFunction" },
+	{ 2073, "CameraDistortionCoefficients" },
+	{ 2074, "ExpectedControllerType" },
+	{ 2075, "HmdTrackingStyle" },
+	{ 2076, "DriverProvidedChaperoneVisibility" },
+	{ 2077, "HmdColumnCorrectionSettingPrefix" },
+	{ 2078, "CameraSupportsCompatibilityModes" },
+	{ 2079, "SupportsRoomViewDepthProjection" },
+	{ 2080, "DisplayAvailableFrameRates" },
+	{ 2081, "DisplaySupportsMultipleFramerates" },
+	{ 2082, "DisplayColorMultLeft" },
+	{ 2083, "DisplayColorMultRight" },
+	{ 2084, "DisplaySupportsRuntimeFramerateChange" },
+	{ 2085, "DisplaySupportsAnalogGain" },
+	{ 2086, "DisplayMinAnalogGain" },
+	{ 2087, "DisplayMaxAnalogGain" },
+	{ 2088, "CameraExposureTime" },
+	{ 2089, "CameraGlobalGain" },
+	//2090 Prop_DashboardLayoutPathName_String DELETED
+	{ 2091, "DashboardScale" },
+	{ 2092, "PeerButtonInfo" },
+	{ 2093, "Hmd_SupportsHDR10" },
+	{ 2094, "Hmd_EnableParallelRenderCameras" },
+	{ 2095, "DriverProvidedChaperoneJson" },
+	{ 2096, "ForceSystemLayerUseAppPoses" },
+
+	{ 2100, "IpdUIRangeMinMeters" },
+	{ 2101, "IpdUIRangeMaxMeters" },
+	{ 2102, "Hmd_SupportsHDCP14LegacyCompat" },
+	{ 2103, "Hmd_SupportsMicMonitoring" },
+	{ 2104, "Hmd_SupportsDisplayPortTrainingMode" },
+	{ 2105, "Hmd_SupportsRoomViewDirect" },
+	{ 2106, "Hmd_SupportsAppThrottling" },
+	{ 2107, "Hmd_SupportsGpuBusMonitoring" },
+	{ 2108, "DriverDisplaysIPDChanges" },
+	{ 2109, "Driver_Reserved_01" },
+
+	{ 2110, "DSCVersion" },
+	{ 2111, "DSCSliceCount" },
+	{ 2112, "DSCBPPx16" },
+
+	{ 2113, "Hmd_MaxDistortedTextureWidth" },
+	{ 2114, "Hmd_MaxDistortedTextureHeight" },
+	{ 2115, "Hmd_AllowSupersampleFiltering" },
+
+	// Driver requested mura correction properties
+	{ 2200, "CorrectionMode" },
+	{ 2201, "Feather_InnerLeft" },
+	{ 2202, "Feather_InnerRight" },
+	{ 2203, "Feather_InnerTop" },
+	{ 2204, "Feather_InnerBottom" },
+	{ 2205, "Feather_OuterLeft" },
+	{ 2206, "Feather_OuterRight" },
+	{ 2207, "Feather_OuterTop" },
+	{ 2208, "Feather_OuterBottom" },
+
+	{ 2300, "DefaultPlaybackDeviceId" },
+	{ 2301, "DefaultRecordingDeviceId" },
+	{ 2302, "DefaultPlaybackDeviceVolume" },
+	{ 2303, "SupportsDualSpeakerAndJackOutput" },
+	{ 2304, "DriverManagesPlaybackVolumeControl" },
+	{ 2305, "DriverPlaybackVolume" },
+	{ 2306, "DriverPlaybackMute" },
+	{ 2307, "DriverManagesRecordingVolumeControl" },
+	{ 2308, "DriverRecordingVolume" },
+	{ 2309, "DriverRecordingMute" },
+
 	{ 3000, "AttachedDeviceId" },
 	{ 3001, "SupportedButtons" },
 	{ 3002, "Axis0Type" },
@@ -121,6 +233,7 @@ std::map<int, const char*> ItemViewModel::devicePropertyNames = {
 	{ 3005, "Axis3Type" },
 	{ 3006, "Axis4Type" },
 	{ 3007, "ControllerRoleHint" },
+
 	{ 4000, "FieldOfViewLeftDegrees" },
 	{ 4001, "FieldOfViewRightDegrees" },
 	{ 4002, "FieldOfViewTopDegrees" },
@@ -128,6 +241,9 @@ std::map<int, const char*> ItemViewModel::devicePropertyNames = {
 	{ 4004, "TrackingRangeMinimumMeters" },
 	{ 4005, "TrackingRangeMaximumMeters" },
 	{ 4006, "ModeLabel" },
+	{ 4007, "CanWirelessIdentify" },
+	{ 4008, "Nonce" },
+
 	{ 5000, "IconPathName" },
 	{ 5001, "NamedIconPathDeviceOff" },
 	{ 5002, "NamedIconPathDeviceSearching" },
@@ -137,8 +253,13 @@ std::map<int, const char*> ItemViewModel::devicePropertyNames = {
 	{ 5006, "NamedIconPathDeviceNotReady" },
 	{ 5007, "NamedIconPathDeviceStandby" },
 	{ 5008, "NamedIconPathDeviceAlertLow" },
+	{ 5009, "NamedIconPathDeviceStandbyAlert" },
+
 	{ 5100, "DisplayHiddenArea_Binary_Start" },
 	{ 5150, "DisplayHiddenArea_Binary_End" },
+	{ 5151, "ParentContainer" },
+	{ 5152, "OverrideContainer_Uint64" },
+
 	{ 6000, "UserConfigPath" },
 	{ 6001, "InstallPath" },
 	{ 6002, "HasDisplayComponent" },
@@ -146,6 +267,12 @@ std::map<int, const char*> ItemViewModel::devicePropertyNames = {
 	{ 6004, "HasCameraComponent" },
 	{ 6005, "HasDriverDirectModeComponent" },
 	{ 6006, "HasVirtualDisplayComponent" },
+	{ 6007, "HasSpatialAnchorsSupport" },
+	{ 6008, "SupportsXrTextureSets"},
+
+	{ 7000, "ControllerType" },
+	//7001 Prop_LegacyInputProfile_String // This is no longer used. See "legacy_binding" in the input profile instead.
+	{ 7002, "ControllerHandSelectionPriority" },
 };
 
 
@@ -161,6 +288,9 @@ std::map<int, const char*> ItemViewModel::controllerRoleNames = {
 	{ 0, "Invalid" },
 	{ 1, "LeftHand" },
 	{ 2, "RightHand" },
+	{ 3, "OptOut" },					// Tracked device is opting out of left/right hand selection
+	{ 4, "Treadmill" }, 				// Tracked device is a treadmill or other locomotion device
+	{ 5, "Stylus" }
 };
 
 
@@ -198,6 +328,7 @@ std::map<int, const char*> ItemViewModel::trackingResultNames = {
 	{ 101, "Calibrating_OutOfRange" },
 	{ 200, "Running_OK" },
 	{ 201, "Running_OutOfRange" },
+	{ 300, "Fallback_RotationOnly" },
 };
 
 
@@ -217,7 +348,7 @@ ItemViewModel::ItemViewModel(MainWindow* mainWindow, QObject * parent) : QAbstra
 }
 
 ItemViewModel::~ItemViewModel() {
-	
+
 }
 
 
@@ -383,7 +514,7 @@ void ItemViewModel::onTimerEvent() {
 		// handle events
 		vr::VREvent_t vrEvent;
 		while (vr::VRSystem()->PollNextEvent(&vrEvent, sizeof(vr::VREvent_t))) {
-		
+
 			//LOG(INFO) << "VREvent: " << vr::VRSystem()->GetEventTypeNameFromEnum((vr::EVREventType)vrEvent.eventType);
 			auto timestamp = QDateTime::currentDateTime();
 			QString logTxt = timestamp.toString("dd.MM.yy-hh:mm:ss.zzz: ");
@@ -409,8 +540,12 @@ void ItemViewModel::onTimerEvent() {
 			case vr::VREvent_MouseMove:
 			case vr::VREvent_MouseButtonDown:
 			case vr::VREvent_MouseButtonUp:
-			case vr::VREvent_Scroll:
-			case vr::VREvent_TouchPadMove: {
+			case vr::VREvent_ScrollDiscrete:
+			case vr::VREvent_TouchPadMove:
+			case vr::VREvent_ReloadOverlays:
+			case vr::VREvent_ScrollSmooth:
+			case vr::VREvent_LockMousePosition:
+			case vr::VREvent_UnlockMousePosition: {
 				logTxt.append("mouse = { button = ").append(QString::number(vrEvent.data.mouse.button)).append(", ")
 					.append("x = ").append(QString::number(vrEvent.data.mouse.x)).append(", ")
 					.append("y = ").append(QString::number(vrEvent.data.mouse.y)).append(" }");
@@ -418,18 +553,25 @@ void ItemViewModel::onTimerEvent() {
 
 			case vr::VREvent_InputFocusCaptured:
 			case vr::VREvent_InputFocusReleased:
-			case vr::VREvent_SceneFocusLost:
-			case vr::VREvent_SceneFocusGained:
+			//case vr::VREvent_SceneFocusLost:
+			//case vr::VREvent_SceneFocusGained:
 			case vr::VREvent_SceneApplicationChanged:
-			case vr::VREvent_SceneFocusChanged:
+			//case vr::VREvent_SceneFocusChanged:
 			case vr::VREvent_InputFocusChanged:
 			case vr::VREvent_Quit:
 			case vr::VREvent_ProcessQuit:
-			case vr::VREvent_QuitAborted_UserPrompt:
+			//case vr::VREvent_QuitAborted_UserPrompt:
 			case vr::VREvent_QuitAcknowledged:
 			case vr::VREvent_ProcessConnected:
 			case vr::VREvent_ProcessDisconnected:
-			case vr::VREvent_SceneApplicationSecondaryRenderingStarted: {
+			//case vr::VREvent_SceneApplicationSecondaryRenderingStarted:
+			case vr::VREvent_SceneApplicationUsingWrongGraphicsAdapter:
+			case vr::VREvent_ActionBindingReloaded:
+			case vr::VREvent_HideRenderModels:
+			case vr::VREvent_ShowRenderModels:
+			case vr::VREvent_SceneApplicationStateChanged:
+			case vr::VREvent_SceneAppPipeDisconnected:
+			{
 				logTxt.append("process = { pid = ").append(QString::number(vrEvent.data.process.pid)).append(", ")
 					.append("oldPid = ").append(QString::number(vrEvent.data.process.oldPid)).append(", ")
 					.append("forced = ").append(QString::number(vrEvent.data.process.bForced)).append(" }");
@@ -494,11 +636,12 @@ void ItemViewModel::onTimerEvent() {
 				reloadApplications();
 				endResetModel();
 				expandRootItems();
-			case vr::VREvent_ApplicationTransitionStarted:
-			case vr::VREvent_ApplicationTransitionAborted:
-			case vr::VREvent_ApplicationTransitionNewAppStarted:
+			//case vr::VREvent_ApplicationTransitionStarted:
+			//case vr::VREvent_ApplicationTransitionAborted:
+			//case vr::VREvent_ApplicationTransitionNewAppStarted:
 			case vr::VREvent_ApplicationMimeTypeLoad:
-			case vr::VREvent_ApplicationTransitionNewAppLaunchComplete: {
+			//case vr::VREvent_ApplicationTransitionNewAppLaunchComplete:
+			{
 				logTxt.append("applicationLaunch = { pid = ").append(QString::number(vrEvent.data.applicationLaunch.pid)).append(", ")
 					.append("ArgsHandle = ").append(QString::number(vrEvent.data.applicationLaunch.unArgsHandle)).append(" }");
 			} break;
@@ -608,7 +751,7 @@ void ItemViewModel::handleTrackedDeviceItemSelected(TrackedDeviceItem * deviceIt
 	std::lock_guard<std::recursive_mutex> lock(mutex);
 	if (openvrConnected) {
 		deviceItemPage = mainWindow->setDeviceItemPage();
-	
+
 		updateTrackedDevicePage(deviceItem);
 
 		auto table = deviceItemPage->getPropsTable();
@@ -847,8 +990,8 @@ void ItemViewModel::updateTrackedDevicePage(TrackedDeviceItem* deviceItem) {
 	deviceItemPage->setTrackingResult(trackingResultText);
 
 	if (pose->bPoseIsValid) {
-		deviceItemPage->setDevicePos(QString::number(pose->mDeviceToAbsoluteTracking.m[0][3]), 
-			QString::number(pose->mDeviceToAbsoluteTracking.m[1][3]), 
+		deviceItemPage->setDevicePos(QString::number(pose->mDeviceToAbsoluteTracking.m[0][3]),
+			QString::number(pose->mDeviceToAbsoluteTracking.m[1][3]),
 			QString::number(pose->mDeviceToAbsoluteTracking.m[2][3]));
 
 		// Hmd Rotation //
@@ -925,7 +1068,7 @@ void ItemViewModel::handleSaveReport() {
 				out << "Report created on " << QDateTime::currentDateTime().toString("dd.MM.yy hh:mm:ss") << "\n";
 
 				out << "\n====== Tracked Devices ======\n";
-				
+
 				vr::TrackedDevicePose_t posesRaw[vr::k_unMaxTrackedDeviceCount];
 				vr::VRSystem()->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseRawAndUncalibrated, 0.0, posesRaw, vr::k_unMaxTrackedDeviceCount);
 

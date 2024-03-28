@@ -28,6 +28,6 @@ FORMS    += src/gui/mainwindow.ui \
 INCLUDEPATH += third-party/openvr/headers \
                third-party/easylogging++
 
-LIBS += -Lthird-party/openvr/lib/win64 -lopenvr_api
+LIBS += -L../OpenVR-Inspector/third-party/openvr/lib/win64 -lopenvr_api
 
 DESTDIR = bin/win64
